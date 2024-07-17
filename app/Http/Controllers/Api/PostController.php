@@ -88,7 +88,7 @@ class PostController extends Controller
             [
                 'title' => 'required',
                 'description' => 'required',
-                'image' => 'required|mimes:png,jpg,jpeg,gif',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg,gif',
             ]
             );
             if($validatePost->fails()){
@@ -101,7 +101,7 @@ class PostController extends Controller
 
             $postImg =  Post::select('id','image')->where(['id' => $id])->get();
             if($request->image != ''){
-                $path = public_path() . '/uploads';
+                $path = public_path() . '/uploads/';
                 if($postImg[0]->image != '' && $postImg[0]->image != null){
                     $old_file = $path. $postImg[0]->image;
                     if(file_exists($old_file)){
